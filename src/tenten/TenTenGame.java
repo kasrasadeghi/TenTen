@@ -35,16 +35,18 @@ public class TenTenGame
     public TenTenGame()
     {
         // 1. Set the score to 0
-        
+        score = 0;
         
         // 2. Set gameOver to false
-        
+        gameOver = false;
         
         // 3. Create a new board (an array of Integers) that is 10x10
-        
+        board = new Integer[10][10];
         
         // 4. Initialize all entries in the new board to be empty (ie set them to null)
-        
+        for (int i = 0; i < board.length; i++) 
+            for (int j = 0; j < board[i].length; j++) 
+                board[i][j] = null;
         
         // 5. Create a new array of 3 TenTenPieces
         
