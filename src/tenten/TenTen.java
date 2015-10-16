@@ -21,8 +21,8 @@ public class TenTen
     public static void main(String[] args)
     {
         
-        //testPieceCreation();
-        launchGame();
+        testPieceCreation();
+//        launchGame();
     }
     
     public static void launchGame()

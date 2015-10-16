@@ -63,7 +63,11 @@ public class TenTenPiece
     // either a 1xsize or sizex1 array filled with fill
     private static Integer [][] createLinePiece( int size, boolean horiz, int fill )
     {
-        return null;
+        Integer [][] pieceMap = (horiz)? new Integer[1][size] : new Integer[size][1];
+        for (int i = 0; i < pieceMap.length; i++)
+            for (int j = 0; j < pieceMap[0].length; j++) 
+                pieceMap[i][j] = fill;
+        return pieceMap;
     }
     
     // createCornerPiece
@@ -79,7 +83,17 @@ public class TenTenPiece
     // fill - what to fill in the filled spaces (the X's above).  All other spaces should be null
     private static Integer [][] createCornerPiece( int size, boolean top, boolean left, int fill )
     {
-        return null;
+        Integer[][] pieceMap = new Integer[size][size];
+        for ( int i = 0; i < pieceMap.length; i++)
+            for ( int j = 0; j < pieceMap.length; j++) {
+                pieceMap[i][j] = 
+                        (top && i==0)? fill :
+                        (!top && i==pieceMap.length-1)? fill :
+                        (left && j==0)? fill : 
+                        (!left && j==pieceMap.length-1)? fill: -1;
+                if (pieceMap[i][j] == -1) pieceMap[i][j] = null;
+            }
+        return pieceMap;
     }
     
     // createSquarePiece
@@ -94,7 +108,11 @@ public class TenTenPiece
     // output - a new size x size array filled with fill
     private static Integer [][] createSquarePiece( int size, int fill )
     {
-        return null;
+        Integer[][] pieceMap = new Integer[size][size];
+        for(int i = 0; i < pieceMap.length; i++)
+            for(int j = 0; j < pieceMap.length; j++) 
+                pieceMap[i][j] = fill;
+        return pieceMap;
     }
     
     protected static Integer getColorIndex( int size, int type )
