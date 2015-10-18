@@ -125,7 +125,6 @@ public class TenTenGame
         // get the 2d grid from the piece
         Integer[][] pieceMap = pieces[index].getGrid();
         
-        boolean output = true;
         // look at each entry in the piece grid
         for (int i = 0; i < pieceMap.length; i++) 
             for (int j = 0; j < pieceMap[i].length; j++) {
@@ -133,22 +132,21 @@ public class TenTenGame
                 // and the ULCr and ULCc, calculate the board row and column
                 // where this entry will land.
                 
-                // k: boardrow of piece = ULCr + i;
-                // k: boardcol of piece = ULCc + j;
+                int boardRow = ULCr + i;
+                int boardCol = ULCc + j;
                 
                 // make sure the board coordinates are in bounds
-                if ( ULCr + i > board.length || ULCc + j > board[i].length)
-                    output = false;
-                
+                if ( boardRow > board.length - 1 || boardCol > board[i].length - 1)
+                    return false;
                 
                 // make sure that if the piece entry is non-null the board entry
                 // is also non-null 
                 // k: ...it returns false
-                if ( pieceMap[i][j] != null && board[ULCr + i][ULCc + j] != null)
-                    output = false;
+                
+                if ( pieceMap[i][j] != null && board[boardRow][boardCol] != null)
+                    return false;
             }
-        //System.out.println("canplay:" + output);
-        return output;
+        return true;
     }
     
     // playPiece
@@ -158,7 +156,7 @@ public class TenTenGame
     // ULCr, ULCc - the location on the board that the upper left corner of the piece will be played on
     public void playPiece( int index, int ULCr, int ULCc )
     {
-        System.out.println("playpiece is running");
+//        System.out.println("playpiece start");
         
         // first validate that this move is legal
         // first, check to see if:
@@ -168,7 +166,8 @@ public class TenTenGame
         if (index != 0 && index != 1 && index != 2) return;
         if ( pieces[index] == null) return;
         if ( !canPlay(index, ULCr, ULCc)) return;
-        System.out.println("playpiece is running because all of the conditions checked out");
+//        System.out.println("playpiece postconditions check");
+        
         // Then:
         // 1. copy each non-null entry in the piece grid onto the corresponding place on the board
         // 2. set the entry in the pieces array to null to indicate that the piece has been played
@@ -176,7 +175,6 @@ public class TenTenGame
         // 4. check to see if the game is over
         // 5. remove any completed rows and/or columns
         
-            // 1. copy each non-null entry in the piece grid onto the corresponding place on the board
         // get the grid from the piece
         Integer[][] pieceMap = pieces[index].getGrid();
         // run through all the entries of the piece grid, placing 
@@ -266,13 +264,16 @@ public class TenTenGame
     // hint: use function canPlay to help you decide if ones of the pieces can be played somewhere
     protected boolean detectGameOver()
     {
-        boolean output = true;
-        for (int k = 0; k < 3; k++)
+        for (int k = 0; k < 3; k++) {
+//            System.out.println("checking piece number " + k);
             if (pieces[k] != null)
                 for (int i = 0; i < board.length; i++)
-                    for (int j = 0; j < board[i].length; j++)
-                        if(canPlay(k,i,j)) output = false;
-        return output;
+                    for (int j = 0; j < board[i].length; j++){
+//                        System.out.println("checking position(r,c): (" + i +"," + j + ")");
+                        if(canPlay(k,i,j)) return false;
+                    }
+        }
+        return true;
     }
     
     public Integer [][] getBoard() { return board; }
