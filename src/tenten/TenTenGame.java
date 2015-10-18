@@ -123,61 +123,87 @@ public class TenTenGame
     public boolean canPlay( int index, int ULCr, int ULCc )
     {
         // get the 2d grid from the piece
+        Integer[][] pieceMap = pieces[index].getGrid();
         
-        
+        boolean output = true;
         // look at each entry in the piece grid
-        
+        for (int i = 0; i < pieceMap.length; i++) 
+            for (int j = 0; j < pieceMap[i].length; j++) {
                 // based on the row and column index in the piece grid
                 // and the ULCr and ULCc, calculate the board row and column
                 // where this entry will land.
                 
+                // k: boardrow of piece = ULCr + i;
+                // k: boardcol of piece = ULCc + j;
                 
                 // make sure the board coordinates are in bounds
+                if ( ULCr + i > board.length || ULCc + j > board[i].length)
+                    output = false;
                 
                 
                 // make sure that if the piece entry is non-null the board entry
-                // is also non-null
-                
-            
-        
-        return true;
+                // is also non-null 
+                // k: ...it returns false
+                if ( pieceMap[i][j] != null && board[ULCr + i][ULCc + j] != null)
+                    output = false;
+            }
+        //System.out.println("canplay:" + output);
+        return output;
     }
     
     // playPiece
     // plays the indicated piece so that its ULC lands at the indicated position on the board
-    // first, check to see if:
-    // 0. The piece index is valid (ie 0, 1, or 2)
-    // 1. The indicated piece hasn't already been played (ie the piece isn't null)
-    // 2. The piece CAN be played at the given location
-    // Then:
-    // 1. copy each non-null entry in the piece grid onto the corresponding place on the board
-    // 2. set the entry in the pieces array to null to indicate that the piece has been played
-    // 3. check to see if we need to get three new pieces (ie all current pieces have been played)
-    // 4. check to see if the game is over
-    // 5. remove any completed rows and/or columns
     // inputs:
     // index - the index of the piece to be played (0, 1, or 2)
     // ULCr, ULCc - the location on the board that the upper left corner of the piece will be played on
     public void playPiece( int index, int ULCr, int ULCc )
     {
+        System.out.println("playpiece is running");
+        
         // first validate that this move is legal
+        // first, check to see if:
+        // 1. The piece index is valid (ie 0, 1, or 2)
+        // 2. The indicated piece hasn't already been played (ie the piece isn't null)
+        // 3. The piece CAN be played at the given location
+        if (index != 0 && index != 1 && index != 2) return;
+        if ( pieces[index] == null) return;
+        if ( !canPlay(index, ULCr, ULCc)) return;
+        System.out.println("playpiece is running because all of the conditions checked out");
+        // Then:
+        // 1. copy each non-null entry in the piece grid onto the corresponding place on the board
+        // 2. set the entry in the pieces array to null to indicate that the piece has been played
+        // 3. check to see if we need to get three new pieces (ie all current pieces have been played)
+        // 4. check to see if the game is over
+        // 5. remove any completed rows and/or columns
         
-            // get the grid from the piece
-            
-            // run through all the entries of the piece grid, placing 
-            
-            
-            // set the played piece to be played (ie null)
-            
-            // check if we need to get new pieces
-            
-            
-            // check if the game is over (set gameOver to the result of function detectGameOver()
-            
+            // 1. copy each non-null entry in the piece grid onto the corresponding place on the board
+        // get the grid from the piece
+        Integer[][] pieceMap = pieces[index].getGrid();
+        // run through all the entries of the piece grid, placing 
+        for (int i = 0; i < pieceMap.length; i++) {
+            for (int j = 0; j < pieceMap[i].length; j++) {
+                if (pieceMap[i][j] != null) {
+                    board[ULCr + i][ULCc + j] = pieceMap[i][j];
+                    ++score;
+                }
+            }
+        }
         
+            // 2. set the entry in the pieces array to null to indicate that the piece has been played
+        // set the played piece to be played (ie null)
+        pieces[index] = null;
         
+            // 3. check to see if we need to get three new pieces (ie all current pieces have been played)
+        // check if we need to get new pieces
+        if (allPiecesPlayed()) getThreeNewPieces();
+        
+            // 4. check to see if the game is over
+        // check if the game is over (set gameOver to the result of function detectGameOver()
+        gameOver = detectGameOver();
+        
+            // 5. remove any completed rows and/or columns
         // check to see if any rows or columns are complete
-        
+        clearFinishedRowsAndColumns();
     }
     
     // clearFinishedRowsAndColumns()
@@ -189,14 +215,21 @@ public class TenTenGame
     {
         // declare and create two arrays of booleans, one to store which rows have been completed and one to
         // store which columns have been completed.
-        
+        boolean[] rowCompleteChecks = new boolean[board.length];
+        boolean[] colCompleteChecks = new boolean[board[0].length];
         
         // check each row and column to see if it's complete.  If it is, mark the corresponding entry
         // in the array(s) that you created above.
-        
+        for (int i = 0; i < board.length; i++) 
+            if ( rowComplete(i)) { rowCompleteChecks[i] = true; score+= 10; }
+        for (int j = 0; j < board[0].length; j++)
+            if ( colComplete(j)) { colCompleteChecks[j] = true; score+= 10; }
         
         // for each row (and column), if it is marked as complete, remove it
-        
+        for (int i = 0; i < board.length; i++) 
+            if (rowCompleteChecks[i]) removeRow(i);
+        for (int j = 0; j < board[0].length; j++) 
+            if (colCompleteChecks[j]) removeCol(j);
     }
     
     // allPiecesPlayed
@@ -205,19 +238,24 @@ public class TenTenGame
     // output: true if all pieces have been played, false otherwise
     protected boolean allPiecesPlayed()
     {
-       return false;
+       for (int i = 0; i < 3; i++)
+           if (pieces[i] != null) return false;
+       return true;
     }
     
     // getThreeNewPieces
     // creates three new pieces and stores them in the pieces array.
     protected void getThreeNewPieces()
     {
-        
+        for (int i = 0; i < 3; i++) 
+            pieces[i] = new TenTenPiece();
     }
     
-    
-    
-    public boolean isGameOver() { return gameOver; }
+    public boolean isGameOver() 
+    { 
+//        System.out.println("gameover is:" + gameOver);
+        return gameOver; 
+    }
     
     // detectGameOver
     // figures out if the game is over - that is, none of the remaining pieces can be placed
@@ -225,10 +263,16 @@ public class TenTenGame
     // input: none
     // output:
     // true if there are no non-null pieces that can be placed somewhere in the grid
-    // hint: use function canPlay to help you decide i
+    // hint: use function canPlay to help you decide if ones of the pieces can be played somewhere
     protected boolean detectGameOver()
     {
-        return false;
+        boolean output = true;
+        for (int k = 0; k < 3; k++)
+            if (pieces[k] != null)
+                for (int i = 0; i < board.length; i++)
+                    for (int j = 0; j < board[i].length; j++)
+                        if(canPlay(k,i,j)) output = false;
+        return output;
     }
     
     public Integer [][] getBoard() { return board; }
@@ -241,34 +285,42 @@ public class TenTenGame
     // rowComplete
     // checks to see if the indicated row is complete (ie no null values in the row)
     // input:
-    // i - the row to check
+    // rowIndex - the row to check
     // output:
     // true if every square in row i is filled, false otherwise
-    private boolean rowComplete(int i)
+    private boolean rowComplete(int rowIndex)
     {
-        return false;
+        for( int c = 0; c < board[0].length; c++)
+            if (board[rowIndex][c] == null) return false;
+        return true;
     }
 
     // colComplete
     // like rowComplete, but checks column instead of a row
-    private boolean colComplete(int i)
+    private boolean colComplete(int colIndex)
     {
-        return false;
+        for( int r = 0; r < board[0].length; r++)
+            if (board[r][colIndex] == null) return false;
+        return true;
     }
 
     // removeRow
     // removes the contents of every square in a row
     // input:
-    // i - the row to remove
-    private void removeRow(int i)
+    // rowIndex - the row to remove
+    private void removeRow(int rowIndex)
     {
-        
+        if (rowComplete(rowIndex)) 
+            for (int i = 0; i < board[0].length; i++) 
+                board[rowIndex][i] = null;
     }
 
     // removeCol
     // like removeRow but for a column instead of a row
-    private void removeCol(int i)
+    private void removeCol(int colIndex)
     {
-        
+        if (colComplete(colIndex)) 
+            for (int i = 0; i < board.length; i++) 
+                board[i][colIndex] = null;
     }
 }

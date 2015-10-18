@@ -20,7 +20,6 @@ public class TenTen
      */
     public static void main(String[] args)
     {
-        
 //        testPieceCreation();
         launchGame();
     }

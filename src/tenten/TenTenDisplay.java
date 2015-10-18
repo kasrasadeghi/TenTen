@@ -94,7 +94,6 @@ public class TenTenDisplay extends DefaultControl<TenTenGame> implements View<Te
         int squareVOffset = sh + shs;  
         
         // for each non-null square in the piece, draw and outline it.
-        
         for (int i = 0; i < piece.length; i++) 
             for (int j = 0; j < piece[i].length; j++) {
                 if (piece[i][j] != null) {
@@ -175,9 +174,9 @@ public class TenTenDisplay extends DefaultControl<TenTenGame> implements View<Te
             );
         }
         
-         g.setColor( Color.BLACK );
-         for (int i = -2; i <= 2; i++) 
-         {
+        g.setColor( Color.BLACK );
+        for (int i = -2; i <= 2; i++) 
+        {
             for (int j = -2; j <= 2; j++) 
             {
                 GraphicsUtilityFunctions.drawStringWithFontInRectangle(
