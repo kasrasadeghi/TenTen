@@ -81,7 +81,7 @@ public class TenTenPiece
     // top - whether to fill the top row (true) or bottom row (false)
     // left - whether to fill the left column (true) or right column (false)
     // fill - what to fill in the filled spaces (the X's above).  All other spaces should be null
-    private static Integer [][] createCornerPiece( int size, boolean top, boolean left, int fill )
+    private static Integer [][] createCornerPiece( int size, boolean top, boolean left, Integer fill )
     {
         Integer[][] pieceMap = new Integer[size][size];
         for ( int i = 0; i < pieceMap.length; i++)
@@ -90,8 +90,7 @@ public class TenTenPiece
                         (top && i==0)? fill :
                         (!top && i==pieceMap.length-1)? fill :
                         (left && j==0)? fill : 
-                        (!left && j==pieceMap.length-1)? fill: -1;
-                if (pieceMap[i][j] == -1) pieceMap[i][j] = null;
+                        (!left && j==pieceMap.length-1)? fill: null;
             }
         return pieceMap;
     }

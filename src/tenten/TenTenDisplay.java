@@ -76,22 +76,34 @@ public class TenTenDisplay extends DefaultControl<TenTenGame> implements View<Te
         for (int i = 0; i < board.length; i++) 
             for (int j = 0; j < board[i].length; j++) {
                 g.setColor((board[i][j] == null)? Color.GRAY : getColor(board[i][j]));
-                g.fillRect(tlx + i*sws, tly + i*shs, sw, sh);
+                g.fillRect(tlx + j*(sw+sws), tly + i*(sh+shs), sw, sh);
+                g.setColor(Color.BLACK);
+                if (board[i][j] != null) 
+                    g.drawRect(tlx + j*(sw+sws), tly + i*(sh+shs), sw, sh);
             }
     }
     
     // paintPiece
     // like paintBoard, but null entries should not be displayed at all.
-    public void paintPiece( Integer [][] piece, Graphics g, int ULCx, int ULCy, int sw, int sh, int shs, int svs )
+    public void paintPiece( Integer [][] piece, Graphics g, int tlx, int tly, int sw, int sh, int sws, int shs )
     {
         // the total horizontal distance bewteen the top left corner of one square and the TLC of the square to the right:
-        int squareHOffset = 0;  // replace the 0 with the correct calculation
+        int squareHOffset = sw + sws;  
         
         // the total vertical distance between the TLC of one square and the TLC of the next square down
-        int squareVOffset = 0;  // replace the 0 with the correct calculation
+        int squareVOffset = sh + shs;  
         
         // for each non-null square in the piece, draw and outline it.
         
+        for (int i = 0; i < piece.length; i++) 
+            for (int j = 0; j < piece[i].length; j++) {
+                if (piece[i][j] != null) {
+                    g.setColor(getColor(piece[i][j]));
+                    g.fillRect(tlx + j*(sw+sws), tly + i*(sh+shs), sw, sh);
+                    g.setColor(Color.BLACK);
+                    g.drawRect(tlx + j*(sw+sws), tly + i*(sh+shs), sw, sh);
+                }
+            }
     }
     
     @Override

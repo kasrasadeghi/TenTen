@@ -49,10 +49,11 @@ public class TenTenGame
                 board[i][j] = null;
         
         // 5. Create a new array of 3 TenTenPieces
-        
+        pieces = new TenTenPiece[3];
         
         // 6. Initialize each piece to a new TenTenPiece
-        
+        for (int i = 0; i < pieces.length; i++)
+            pieces[i] = new TenTenPiece();
     }
     
     public int getScore() { return score; }
