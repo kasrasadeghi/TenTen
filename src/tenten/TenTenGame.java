@@ -195,14 +195,8 @@ public class TenTenGame
             // 3. check to see if we need to get three new pieces (ie all current pieces have been played)
         // check if we need to get new pieces
         if (allPiecesPlayed()) getThreeNewPieces();
-        
-            // 4. check to see if the game is over
-        // check if the game is over (set gameOver to the result of function detectGameOver()
-        gameOver = detectGameOver();
-        
-            // 5. remove any completed rows and/or columns
-        // check to see if any rows or columns are complete
         clearFinishedRowsAndColumns();
+        gameOver = detectGameOver();
     }
     
     // clearFinishedRowsAndColumns()
