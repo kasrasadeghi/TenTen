@@ -139,7 +139,7 @@ public class TenTenGame
                 if ( boardRow > board.length - 1 || boardCol > board[i].length - 1)
                     return false;
                 
-                // make sure that if the piece entry is non-null the board entry
+                // make sure that if the piece entry is non-null and the board entry
                 // is also non-null 
                 // k: ...it returns false
                 
