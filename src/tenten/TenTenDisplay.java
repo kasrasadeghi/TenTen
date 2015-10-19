@@ -25,6 +25,15 @@ public class TenTenDisplay extends DefaultControl<TenTenGame> implements View<Te
     private int selectedRow, selectedCol;
     private int height, width;
     
+//    protected final static Color COLOR0 = new Color( 126, 142, 213 );
+//    protected final static Color COLOR1 = new Color( 254, 198, 61 );
+//    protected final static Color COLOR2 = new Color( 255, 0, 0 );
+//    protected final static Color COLOR3 = new Color( 0, 128, 0 );
+//    protected final static Color COLOR4 = new Color( 0, 255, 0 );
+//    protected final static Color COLOR5 = new Color( 152, 220, 0 );
+//    protected final static Color COLOR6 = new Color( 77, 213, 176 );
+//    protected final static Color COLOR7 = new Color( 231, 106, 130 );
+//    protected final static Color COLOR8 = new Color( 92, 190, 228 );
     protected final static Color INDIGO = new Color( 128, 0, 255 );
     protected final static Color VIOLET = new Color( 128, 0, 128 );
     
@@ -38,6 +47,15 @@ public class TenTenDisplay extends DefaultControl<TenTenGame> implements View<Te
     {
         switch( colorIndex )
         {
+//            case 0: return COLOR0;
+//            case 1: return COLOR1;
+//            case 2: return COLOR2;
+//            case 3: return COLOR3;
+//            case 4: return COLOR4;
+//            case 5: return COLOR5;
+//            case 6: return COLOR6;
+//            case 7: return COLOR7;
+//            default: return COLOR8;
             case 0: return Color.RED;
             case 1: return Color.ORANGE;
             case 2: return Color.YELLOW;

@@ -41,7 +41,7 @@ public class TenTenGame
         gameOver = false;
         
         // 3. Create a new board (an array of Integers) that is 10x10
-        board = new Integer[10][10];
+        board = new Integer[11][11];
         
         // 4. Initialize all entries in the new board to be empty (ie set them to null)
         for (int i = 0; i < board.length; i++) 
@@ -219,10 +219,17 @@ public class TenTenGame
         // check each row and column to see if it's complete.  If it is, mark the corresponding entry
         // in the array(s) that you created above.
         for (int i = 0; i < board.length; i++) 
-            if ( rowComplete(i)) { rowCompleteChecks[i] = true; score+= 10; }
+            if ( rowComplete(i)) rowCompleteChecks[i] = true; 
         for (int j = 0; j < board[0].length; j++)
-            if ( colComplete(j)) { colCompleteChecks[j] = true; score+= 10; }
+            if ( colComplete(j)) colCompleteChecks[j] = true; 
         
+        int barsCompletedAtOnce = 0;
+        for (int i = 0; i < rowCompleteChecks.length; i++)
+            if (rowCompleteChecks[i]) barsCompletedAtOnce++;
+        for (int i = 0; i < colCompleteChecks.length; i++)
+            if (colCompleteChecks[i]) barsCompletedAtOnce++;
+        int x = barsCompletedAtOnce;
+        score += 5*x*(x+1);
         // for each row (and column), if it is marked as complete, remove it
         for (int i = 0; i < board.length; i++) 
             if (rowCompleteChecks[i]) removeRow(i);
