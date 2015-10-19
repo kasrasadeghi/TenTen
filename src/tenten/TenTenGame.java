@@ -136,7 +136,8 @@ public class TenTenGame
                 int boardCol = ULCc + j;
                 
                 // make sure the board coordinates are in bounds
-                if ( boardRow > board.length - 1 || boardCol > board[i].length - 1)
+                if ( boardRow > board.length - 1 || boardCol > board[i].length - 1 
+                        || boardRow < 0 || boardCol < 0)
                     return false;
                 
                 // make sure that if the piece entry is non-null and the board entry
@@ -271,15 +272,11 @@ public class TenTenGame
     // hint: use function canPlay to help you decide if ones of the pieces can be played somewhere
     protected boolean detectGameOver()
     {
-        for (int k = 0; k < 3; k++) {
-//            System.out.println("checking piece number " + k);
+        for (int k = 0; k < pieces.length; k++) 
             if (pieces[k] != null)
                 for (int i = 0; i < board.length; i++)
-                    for (int j = 0; j < board[i].length; j++){
-//                        System.out.println("checking position(r,c): (" + i +"," + j + ")");
+                    for (int j = 0; j < board[i].length; j++)
                         if(canPlay(k,i,j)) return false;
-                    }
-        }
         return true;
     }
     
