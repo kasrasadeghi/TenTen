@@ -82,12 +82,6 @@ public class TenTenDisplay extends DefaultControl<TenTenGame> implements View<Te
     // sws, shs - the horizontal and vertical spacing between the squares
     public void paintBoard( Integer [][] board, Graphics g, int tlx, int tly, int sw, int sh, int sws, int shs )
     {
-        // the total horizontal distance bewteen the top left corner of one square and the TLC of the square to the right:
-        int squareHOffset = sw + sws;  // replace the 0 with the correct calculation
-        
-        // the total vertical distance between the TLC of one square and the TLC of the next square down
-        int squareVOffset = sh + shs;  // replace the 0 with the correct calculation
-        
         // for each square in board, if the square is null, draw a grey square, if not, draw a colored square
         // outline any square drawn in black.
         
@@ -105,22 +99,15 @@ public class TenTenDisplay extends DefaultControl<TenTenGame> implements View<Te
     // like paintBoard, but null entries should not be displayed at all.
     public void paintPiece( Integer [][] piece, Graphics g, int tlx, int tly, int sw, int sh, int sws, int shs )
     {
-        // the total horizontal distance bewteen the top left corner of one square and the TLC of the square to the right:
-        int squareHOffset = sw + sws;  
-        
-        // the total vertical distance between the TLC of one square and the TLC of the next square down
-        int squareVOffset = sh + shs;  
-        
         // for each non-null square in the piece, draw and outline it.
         for (int i = 0; i < piece.length; i++) 
-            for (int j = 0; j < piece[i].length; j++) {
+            for (int j = 0; j < piece[i].length; j++) 
                 if (piece[i][j] != null) {
                     g.setColor(getColor(piece[i][j]));
                     g.fillRect(tlx + j*(sw+sws), tly + i*(sh+shs), sw, sh);
                     g.setColor(Color.BLACK);
                     g.drawRect(tlx + j*(sw+sws), tly + i*(sh+shs), sw, sh);
                 }
-            }
     }
     
     @Override
@@ -128,8 +115,6 @@ public class TenTenDisplay extends DefaultControl<TenTenGame> implements View<Te
     {
         height = h;
         width = w;
-        
-        Integer [][] board = m.getBoard();
         
         int squareHOffset = (int)(w/20.0);
         int squareHSpacing = (int)(w/250.0);
@@ -220,9 +205,7 @@ public class TenTenDisplay extends DefaultControl<TenTenGame> implements View<Te
         if ( g.isGameOver() ) return;
         
         double squareHOffset = width/20.0;
-        double squareHSpacing = width/250.0;
         double squareVOffset = height/20.0;
-        double squareVSpacing = height/250.0;
         
         int x = me.getX();
         int y = me.getY();
