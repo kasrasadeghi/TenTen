@@ -41,7 +41,7 @@ public class TenTenGame
         gameOver = false;
         
         // 3. Create a new board (an array of Integers) that is 10x10
-        board = new Integer[11][11];
+        board = new Integer[10][10];
         
         // 4. Initialize all entries in the new board to be empty (ie set them to null)
         for (int i = 0; i < board.length; i++) 

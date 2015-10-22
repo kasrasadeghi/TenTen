@@ -11,4 +11,10 @@ package tenten;
  */
 public class Decision {
     
+    
+    public Decision(Integer[][] board, int row, int col, Integer[][] pieceMap) {
+        
+    }
+    
+    
 }
